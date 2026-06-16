@@ -1,0 +1,19 @@
+fastapi
+uvicorn[standard]
+SQLAlchemy
+slowapi
+pydantic
+python-multipart
+email-validator
+python-dotenv
+Jinja2
+aiosmtplib
+reportlab
+passlib[bcrypt]
+python-jose[cryptography]
+gunicorn
+psycopg2-binary
+
+# Add your DB driver if using PostgreSQL or MySQL, e.g.:
+# psycopg2-binary  # PostgreSQL
+# mysqlclient      # MySQL
