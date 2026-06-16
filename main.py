@@ -4,7 +4,7 @@ from ROUTES.authroute import auth_router
 from ROUTES.businessrouter import business_router
 from ROUTES.clientrouter import client_router
 from ROUTES.invoicerouter import invoice_router
-
+from ROUTES.dashboardrouter import dashboard_router
 
 from database import engine,Base
 from slowapi.middleware import SlowAPIMiddleware
@@ -35,5 +35,6 @@ app.include_router(auth_router)
 app.include_router(business_router)
 app.include_router(client_router)
 app.include_router(invoice_router)
+app.include_router(dashboard_router)
 
 Base.metadata.create_all(bind=engine)

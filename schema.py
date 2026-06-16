@@ -150,6 +150,50 @@ class InvoiceResponsePagination(BaseModel):
     limit:int
 
 
+class DashboardTrend(BaseModel):
+    month:int
+    revenue:float
+
+    class Config:
+        from_attributes = True
+
+
+class DashboardClient(BaseModel):
+    client_id:int
+    client_name:str
+    revenue:float
+
+    class Config:
+        from_attributes = True
+
+
+class DashboardInvoiceSummary(BaseModel):
+    id:int
+    invoice_no:str
+    status:str
+    total:float
+    due_date:Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class DashboardResponse(BaseModel):
+    total_clients:int
+    total_invoices:float
+    total_paid:float
+    total_unpaid:float
+    revenue_month:float
+    revenue_year:float
+    overdue_count:int
+    upcoming_due:int
+    trend:list[DashboardTrend] = []
+    top_clients:list[DashboardClient] = []
+    recent_invoices:list[DashboardInvoiceSummary] = []
+
+    class Config:
+        from_attributes = True
+
 
 class InvoiceItem(BaseModel):
     id:int

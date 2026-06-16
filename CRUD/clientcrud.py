@@ -25,6 +25,7 @@ def create_client(db:Session,business_id:int,user:models.User,data:schema.Create
     db.add(client)
     db.commit()
     db.refresh(client)
+    return client
 
 
 def update_client(db:Session,client_id:int,user:models.User,data:schema.UpdateClient):
