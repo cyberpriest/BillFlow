@@ -150,6 +150,13 @@ class InvoiceResponsePagination(BaseModel):
     limit:int
 
 
+class ClientResponsePagination(BaseModel):
+    result: list[ClientResponse] = []
+    total: int
+    page: int
+    limit: int
+
+
 class DashboardTrend(BaseModel):
     month:int
     revenue:float

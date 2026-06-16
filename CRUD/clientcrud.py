@@ -55,19 +55,27 @@ def delete_client(db:Session,client_id:int,user:models.User):
     db.commit()
     return {'message':'client deleted sucessfully'}
 
-def get_all_client_list(db:Session,page:int = 1,limit:int = 10,search:str|None = None):
-
-    query = db.query(models.Client)
+def get_all_client_list(db:Session, business_id: int, user: models.User, page:int = 1, limit:int = 10, search:str|None = None):
+    # Verify user owns the business
+    business = db.query(models.Business).filter(
+        models.Business.id == business_id,
+        models.Business.owner_id == user.id
+    ).first()
+    if not business:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='business not found or you are not the owner')
+    
+    # Query clients for this business
+    query = db.query(models.Client).filter(models.Client.business_id == business_id)
     if search:
-        query.filter(models.Client.client_name.ilike(f"%{search}%"))
+        query = query.filter(models.Client.client_name.ilike(f"%{search}%"))
+    
     total_clients = query.count()
-    page,limit = Pagination(page,limit)
-
-    result =  query.offset(page).limit(limit).all()
+    skip, limit = Pagination(page, limit)
+    result = query.offset(skip).limit(limit).all()
+    
     return {
-        'result':result,
-        'page':page,
-        'limit':limit,
-        'total':total_clients,
-
-        }
+        'result': result,
+        'page': page,
+        'limit': limit,
+        'total': total_clients,
+    }

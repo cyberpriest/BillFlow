@@ -1,7 +1,7 @@
 from  fastapi import APIRouter,Depends,status,HTTPException
 import models,schema ,database,auth
 from sqlalchemy.orm import  Session
-from CRUD.clientcrud import create_client
+from CRUD.clientcrud import create_client, get_all_client_list
 
 client_router = APIRouter(prefix='/client',tags=['CLIENT'])
 
@@ -12,6 +12,18 @@ def add_client(client_in:schema.CreateClient,
 
                db:Session = Depends(database.get_db)):
     return create_client(db,business_id,user,client_in)
+
+
+@client_router.get('/list', response_model=schema.ClientResponsePagination)
+def list_clients(
+    business_id: int,
+    page: int = 1,
+    limit: int = 10,
+    search: str | None = None,
+    user: models.User = Depends(auth.get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    return get_all_client_list(db, business_id, user, page, limit, search)
 
 
 @client_router.patch('/update-client',response_model=schema.ClientResponse)
