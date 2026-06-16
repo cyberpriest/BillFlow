@@ -72,12 +72,12 @@ class BusinessResponse(BaseModel):
 
 
 class Client(BaseModel):
-    id:int
+
     client_name:str
     client_email:str
     address:str
     phone:str
-    business_id:int
+
 
 
 
