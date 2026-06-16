@@ -20,7 +20,8 @@ app = FastAPI(title="Invoice Manager",description="A simple invoice management s
 app.add_middleware(SlowAPIMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://id-preview--e2c2611d-8944-43e6-a519-8fdb21921a6e.lovable.app"],
+    allow_origins=["https://id-preview--e2c2611d-8944-43e6-a519-8fdb21921a6e.lovable.app",
+                   "https://billflow-760173621355.europe-west2.run.app"],
     allow_methods=["*"],
     allow_headers=["*"],
     allow_credentials=True
